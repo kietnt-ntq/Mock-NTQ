@@ -1,0 +1,167 @@
+<div class="modal fade" id="edit_event">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="modal-title"><%= @event.title %></h4>
+            </div>
+              <div class="col-md-4">
+              <div class="row">
+                <% if @event.endDate >= Date.today %>
+                  <div class="control-label col-sm-3">
+                  </div>
+                  <div class="control-label col-sm-1">
+                    <a class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal<%=  @event.id %>"></a>
+                  </div>
+                  <div class="col-md-1">
+                    <a class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#exampleModal"></a>
+                  </div>
+                  <div class="col-md-1">
+                    <%= link_to "", group_event_path(@event),class: "glyphicon glyphicon-trash", method: :delete, data: { confirm: 'Are you sure to delete  this event?' },remote: true %>
+                  </div>
+                  <div class="col-md-3">
+                    <button type="button" class="close glyphicon glyphicon-remove" data-dismiss="modal"></button>
+                  </div>
+                <% else %>
+                  <div class="control-label col-sm-3">
+                  </div>
+                  <div class="control-label col-sm-1">
+                  </div>
+                  <div class="col-md-1">
+                  </div>
+                  <div class="col-md-1">
+                  </div>
+                  <div class="col-md-3">
+                    <button type="button" class="close glyphicon glyphicon-remove" data-dismiss="modal"></button>
+                  </div>
+                <% end %>
+              </div>
+          </div>
+      </div>
+    </div>
+
+      <div class="modal-body">
+        <%= render 'show', event: @event %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <%= render 'formedit', event: @event %>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+ <!--Modal attendance-->
+    <div id="myModal<%=  @event.id %>" class="modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Attendance</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <%= form_for :member,  url: attendance_event_member_path do |f| %>
+                        <div class="row px-1">
+                            <div class="nav-attendance px-1">
+                                <div class="img-attendance">
+                                    <%= image_tag("hero_1.jpg", alt: "Cover",id:"cover-header") %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2 my-2 py-2">
+                        <% @members_active.each do |member|%>
+                            
+                            <div class="member-attendance">
+                                <div class="row px-2">
+                                    <div class="col-sm-7">
+                                        <div class="row">
+                                            <div class="col-sm-4 text-center">
+                                                <%= image_tag(member.user.pictures, alt: "Cover",class: "avt-attendance") %>
+                                            </div>
+                                            <div class="content col-sm-8">
+                                                <h4><%= member.user.fullname %></h4>
+                                                <div class="email-attendance"> <%= member.user.email %></div>
+                                                <div class="chx-attendance">
+                                            
+                                                        <input type="checkbox" name="member[<%= member.id %>][check]" value="yes" 
+                                                        <% @attendances.each do |attendance|%> 
+                                                        <%= "checked" if member.user_id == attendance.user_id && attendance.event_id ==  @event.id && attendance.status == "1" %> 
+                                                        <% end %>
+                                                        > Present
+                                                    <input type="hidden" name="member[<%= member.id %>][user_id]" value="<%= member.user.id %>">
+                                                    <input type="hidden"name="member[<%= member.id %>][event_id]" value="<%=  @event.id %>">
+                                                    <input type="hidden"name="member[<%= member.id %>][group_id]" value="<%= member.group.id %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 ">
+                                        <div class="input-note">
+                                            <input type="text" name="member[<%= member.id %>][note]" class="" placeholder="Note">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            
+                        <% end %>
+
+                            <% @members_isprove.each do |member|%>
+                            <% @attendances.each do |attendance|%> 
+                            <% if member.user_id == attendance.user_id && attendance.event_id ==  @event.id%>
+                            <div class="member-attendance">
+                                <div class="row px-2">
+                                    <div class="col-sm-7">
+                                        <div class="row">
+                                            <div class="col-sm-4 text-center">
+                                                <%= image_tag(member.user.pictures, alt: "Cover",class: "avt-attendance") %>
+                                            </div>
+                                            <div class="content col-sm-8">
+                                                <h4><%= member.user.fullname %></h4>
+                                                <div class="email-attendance"> <%= member.user.email %></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 ">
+                                        <div class="input-note">
+                                            <input type="text" class="" placeholder="member out Group" readonly >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% end %>
+                            <% end %>
+                        <% end %>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <%= f.submit "Submit", class: 'btn btn-success' %>
+                        </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--end Modal attendance-->

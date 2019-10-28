@@ -1,0 +1,50 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"aria-hidden="true">&times;</button>
+      <h4 align="center" class="modal-title" id="myModalLabel">Update New <%= @content.title %> </h4>
+    </div>
+      <%=form_for [@group, @content], validate: true, remote: true do |f| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="date">
+              <div class="row">
+                <div class="col-sm-6">
+                  <%=f.text_field :title,class: "form-control", placeholder: "Title", autofocus: true, required: true  %>
+                </div>
+                <div class="col-sm-6">
+               <%= f.select :level, [[ 'Beginner', 'Beginner' ],[ 'intermediste', 'intermediste'],[ 'expert', 'expert']],{}, {class: "form-control"} %>
+                </div>
+              </div>
+            </div>
+            <div class="date">
+              <div class="row">
+                <div class="col-sm-6">
+                  <%=f.text_field :startDate, class: "form-control datepicker", placeholder: "Start Date", required: true,:id => "datepicker"  %>
+                </div>
+                <div class="col-sm-6">
+                  <%=f.text_field :endDate, class: "form-control datepicker", placeholder: "End Date", required: true, :id => "datepicker"  %>
+                </div>
+              </div>
+            </div>
+              <script>
+                $('.datepicker').datepicker({format: 'dd/mm/yyyy', startDate: '0d', endDate: ''});
+              </script>
+            <div class="date">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%=f.cktext_area :description,rows: 10, class: "form-control", placeholder: "Body of content", required: true  %>
+                </div>
+              </div>
+            </div>
+          </div>
+         </div>
+            <div class="modal-footer">
+              <div class="content-star">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <%= f.submit "Save", class: 'btn btn-primary btn-large' %>
+              </div>
+            </div>
+          <% end %>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+$('#remote_container').html('<%= j render"new" %>');
+//$('#new_event').modal('show');
+$('#new_event').on('shown.bs.modal', function() {
+  $('form[data-validate]').enableClientSideValidations();
+}).modal("show")

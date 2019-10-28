@@ -1,0 +1,155 @@
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.col-content{
+  margin-left: 100px;
+}
+.col-xs-offset-1 {
+  margin-left: 15.333333% !important;
+}
+.content-body {
+ padding-top: 15px;
+ padding-bottom: 15px;
+ width: 550px;
+}
+
+.content-pending-main{
+  height: auto;
+}
+
+.take-content-pending {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 550px;
+  height: auto;
+}
+.content-pending {
+  height: auto;
+}
+.but {
+  position: absolute;
+    top: 209px;
+}
+
+.content-date-join {
+  padding-top: 15px;
+ padding-bottom: 15px;
+}
+
+.content-date-join span {
+  color: aqua;
+}
+
+.content-img {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 127px;
+ }
+
+.content-body span {
+  font-size: 15px;
+  color:#E0F8EC;
+}
+
+.content-email span {
+  font-size: 15px;
+  color:aqua;
+  width: 200px;
+}
+
+.apvode:hover {
+  color: none;
+}
+
+#view-all {
+  font-size: 15px;
+  color: #568080;
+  position: absolute;
+  top: 213px;
+  left: 467px;
+  width: 65px;
+}
+
+#pen {
+  position: absolute;
+  bottom: -34px;
+  right: 21px;
+}
+
+.bt-create {
+ padding-left: 205px;
+ padding-bottom:10px;
+ padding-right: 205px;
+}
+.level-right{
+padding-right:30px;
+}
+.background-image-content{
+  background-image: url("");
+  width: 234px;
+  height: 300px;
+  position: relative;
+}
+
+.background-image-pending{
+  background-image: url("");
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+.content-group  {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  width: 200px;
+}
+.content-status{
+background-color: #fff;
+width: 120px;
+height: 30px;
+position: relative;
+left:-35px;
+top: -10px;
+border-radius: 5px;
+
+}
+.content-date {
+padding-bottom: 10px;
+}
+.content-star {
+ padding-bottom: 10px;
+padding-top: 10px;
+ }
+ .content-drop{
+font-size: 15px;
+text-decoration: none;
+color: darkgrey;
+ }
+.content-sz{
+  padding-left:127px;
+  width:980px;
+}
+.content-center {
+  padding-bottom: 10px;
+  width: 100px;
+}
+.img-sz{
+width: 50px;
+}
+
+.content-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.date {
+  padding-top: 20px;
+}
+
+.content-create-sz span {
+  font-size: 15px;
+  color:aqua;
+}
+

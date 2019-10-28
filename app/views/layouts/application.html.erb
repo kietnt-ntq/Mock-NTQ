@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LearningSocialNetwork</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag Ckeditor.cdn_url %>
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+      <%= render 'shared/messages' %>
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+      <div id='remote_container'></div>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+ <div class="main-list-group container-fluid">
+        <div class="row">
+            <div class="cate">
+               <h3>Home / <%= @cours.name %></h3>
+               <hr>
+            </div>
+        </div>
+        <!-- Comming Soon -->
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="list-group col-md-4">
+                        <h3> Group Comming Soon</h3>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <% @comming.each do |comming| %>
+                    <div class="item-group">
+                        <div class="form-item">
+                            <div class="g-top">
+                                <%= link_to  comming.name, group_url(id: comming.id, group_id: comming.id), class: "link_group" %>
+                            </div>
+                            <hr>
+                            <div class="g-mid">
+                                <div class="g-m-left">
+                                    <p><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 1 Member</p>
+                                    <p><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>  0 Event</p>
+                                </div>
+                                <div class="g-m-right">
+                                    <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Nguyen Tuan Kiet</p>
+                                    <p><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><%= comming.startdate %></p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="g-bottom">
+                                <p><%= comming.decription %></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- end -comming soon -->
+         <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="list-group col-md-4">
+                        <h3> Group Running</h3>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <% @running.each do |gr| %>
+                        <div class="item-group">
+                            <div class="form-item">
+                                <div class="g-top">
+                                  <%= link_to  gr.name, group_url(id: gr.id, group_id: gr.id), class: "link_group" %>
+                                </div>
+                                <hr>
+                                <div class="g-mid">
+                                    <div class="g-m-left">
+                                        <p><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 1 Member</p>
+                                        <p><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>  0 Event</p>
+                                    </div>
+                                    <div class="g-m-right">
+                                        <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Nguyen Tuan Kiet</p>
+                                        <p><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                            <%= gr.startdate %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="g-bottom">
+                                    <p><%= gr.decription %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+            </div>
+        </div>
+        <!-- Running -->
+
+    </div>

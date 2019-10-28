@@ -1,0 +1,4 @@
+$("#product-modal").html("<%= j render "edit" %>")
+$('#product-modal').on('shown.bs.modal', function() {
+  $('form[data-validate]').enableClientSideValidations();
+}).modal("show")

@@ -1,0 +1,97 @@
+<div class="header_top">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4" id="left">
+            <%= link_to image_tag("lg.png", alt:"logo"), root_path %>
+        </div>
+        <div class="col-xs-12 col-sm-2" id="mid">
+            <div class="flow">
+                <div class="dropdown following">
+                    <a class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Following Classes
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu overflow" role="menu" aria-labelledby="menu1">
+                    <% if user_signed_in? %>
+                        <% @following.each do |follow| %>
+                        <li><%= link_to  follow.name, group_path(follow) %></li>
+                        <% end %>
+                    <% end %>
+                        <li role="presentation" class="divider"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 " id="right">
+            <ul>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+                <% if user_signed_in? %>
+                <li id="profile" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="<%= current_user.pictures%>" alt="" id="avatar">
+                        <%= current_user.fullname %>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li> <%= link_to ' My Profile', user_path(current_user) %></li>
+                        <li class="divider"></li>
+                        <li>  <%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+                    </ul>
+                </li>
+                <% else %>
+                <li><%= link_to  "login", user_google_oauth2_omniauth_authorize_path %></li>
+                <% end %>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="header_bot">
+    <div class="cover-image">
+        <%= image_tag("cv.jpeg", alt: "Cover",id:"cover-header") %>
+        <h2>Welcome to Learning social networking</h2>
+            <% if user_signed_in? %>
+           <button class="open-button" onclick="openForm()">Create new group</button>
+            <div class="form-popup" id="myForm">
+                <%= form_for(group, url: groups_path, html: {class: "form-container"}) do |f| %>
+                    <h1>Create new group</h1>
+                    <%= f.label :name, "Your group name" %>
+                    <%= f.text_field :name, class: 'form-control',:required => true, maxlength: "64" %>
+                    
+                    <%= f.label :decription %>
+                    <%= f.text_field :decription, class: 'form-control',:required => true, maxlength: "255" %>
+
+                    <%= f.label :startdate, "Start Date" %>
+                    <%= f.text_field :startdate, class: 'form-control datepicker',:required => true , placeholder: "Stat Date"%>
+
+                    <%= f.label :course, "Course" , class: "course" %>
+                    <select  name="group[course_name]"  class="js-example-tags select2">
+                        <% @cour.each do |course| %>
+                        <option id="select2" ><%= course.name %></option>
+                        <% end %>
+                    </select>
+                    
+                    <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                    <%= f.submit "Done and publish", class: "btn btn-primary" %>
+
+                <% end %>
+            </div>
+            <script>
+                 $('.datepicker').datepicker({format: 'dd/mm/yyyy', startDate: '0d'});
+            </script>
+            <script>
+
+                function openForm() {
+                    document.getElementById("myForm").style.display = "block";
+                }
+
+                function closeForm() {
+                    document.getElementById("myForm").style.display = "none";
+                }
+                function myFunction() {
+                    var popup = document.getElementById("myPopup");
+                    popup.classList.toggle("show");
+                }
+            </script>
+             <% end %>
+    </div>
+</div>

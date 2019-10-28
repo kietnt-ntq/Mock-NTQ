@@ -1,0 +1,4 @@
+$('#remote_container').html('<%= j render "edit" %>');
+$('#edit_event').on('shown.bs.modal', '.modal', function() {
+  $('form[data-client-side-validations]').enableClientSideValidations();
+}).modal("show")

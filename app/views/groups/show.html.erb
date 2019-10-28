@@ -1,0 +1,215 @@
+<% if user_signed_in? %>
+<div class="row">
+  <div class=" col-sm-8 col-sm-offset-1">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <%= link_to "Add content", new_group_content_path(@group), class: "btn btn-lg btn-default" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Or view  exsting contents", group_path, class: "btn btn-lg btn-default" %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<% if @contents.blank? %>
+<h2 align="center">No Content just yet, would you like to add the first!</h2>
+<% else %>
+<% @contents.each do |content| %>
+<div class="row">
+  <div class="well col-xs-8 col-xs-offset-1 col-content">
+    <div class="row">
+      <div class="col-xs-4">
+        <div>
+          <%= image_tag( "ava.jpg", alt: "Rails", class: "background-image-content" )%>
+        </div>
+        <div class="content-group">
+          <div class="content-email">
+
+            <div class="content-status">
+              <% if content.endDate >= Date.today %>
+              <h3 align="center">Learning</h3>
+              <% else %>
+              <h3 align="center">Done</h3>
+              <% end %>
+            </div>
+
+            <span>
+              <img src="<%= content.user.pictures%>" alt="" id="avatar">
+              <%= content.user.fullname %> <br>
+              <div class="content-create-sz">
+                <%= content.created_at.strftime("%H:%M %d/%m/%Y") %>
+              </div>
+            </span>
+          </div>
+          <div class="content-date-join">
+            <div class="content-create-sz">
+              <span> Start:
+                <%=  content.startDate.strftime("%d/%m/%Y") %></span>
+              </br>
+              <span>End:
+                <%=  content.endDate.strftime("%d/%m/%Y") %></span>
+              </br>
+              <span>Level:
+                <%=  content.level %></span>
+            </div>
+          </div>
+          <div class="content-actions">
+            <div class="content-button">
+               <div>
+                    <button class="btn btn-info" data-toggle="modal" data-backdrop="static"
+                            data-keyboard="true" data-target="#attendanceContent<%=  content.id %>">Take
+                        attendance
+                    </button>
+                </div>
+                <!--Modal attendance-->
+                <div id="attendanceContent<%=  content.id %>" class="modal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Attendance</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                  <%= form_for :member,  url: attendance_member_path do |f| %>
+                                    <div class="row px-1">
+                                        <div class="nav-attendance px-1">
+                                            <div class="img-attendance">
+                                                <%= image_tag("hero_1.jpg", alt: "Cover",id:"cover-header") %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 my-2 py-2">
+                                    <% @members_active.each do |member|%>
+                                     
+                                        <div class="member-attendance">
+                                            <div class="row px-2">
+                                                <div class="col-sm-7">
+                                                    <div class="row">
+                                                        <div class="col-sm-4 text-center">
+                                                           <%= image_tag(member.user.pictures, alt: "Cover",class: "avt-attendance") %>
+                                                        </div>
+                                                        <div class="content col-sm-8">
+                                                            <h4><%= member.user.fullname %></h4>
+                                                            <div class="email-attendance"> <%= member.user.email %></div>
+                                                            <div class="chx-attendance">
+                                                      
+                                                                  <input type="checkbox" name="member[<%= member.id %>][check]" value="yes" 
+                                                                  <% @attendances.each do |attendance|%> 
+                                                                  <%= "checked" if member.user_id == attendance.user_id && attendance.content_id == content.id && attendance.status == "1" %> 
+                                                                  <% end %>
+                                                                  > Present
+                                                                <input type="hidden" name="member[<%= member.id %>][user_id]" value="<%= member.user.id %>">
+                                                                <input type="hidden"name="member[<%= member.id %>][content_id]" value="<%= content.id %>">
+                                                                <input type="hidden"name="member[<%= member.id %>][group_id]" value="<%= member.group.id %>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5 ">
+                                                    <div class="input-note">
+                                                        <input type="text" name="member[<%= member.id %>][note]" class="" placeholder="Note">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                      
+                                    <% end %>
+
+                                     <% @members_isprove.each do |member|%>
+                                      <% @attendances.each do |attendance|%> 
+                                       <% if member.user_id == attendance.user_id && attendance.content_id == content.id%>
+                                        <div class="member-attendance">
+                                            <div class="row px-2">
+                                                <div class="col-sm-7">
+                                                    <div class="row">
+                                                        <div class="col-sm-4 text-center">
+                                                           <%= image_tag(member.user.pictures, alt: "Cover",class: "avt-attendance") %>
+                                                        </div>
+                                                        <div class="content col-sm-8">
+                                                            <h4><%= member.user.fullname %></h4>
+                                                            <div class="email-attendance"> <%= member.user.email %></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5 ">
+                                                    <div class="input-note">
+                                                        <input type="text" class="" placeholder="member out Group" readonly >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% end %>
+                                      <% end %>
+                                    <% end %>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                       <%= f.submit "Submit", class: 'btn btn-success' %>
+                                    </div>
+                                  <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end Modal attendance-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="content-title">
+              <%= truncate(content.title, length: 36) %>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="menu-content-drop">
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" id="dropdownMenu" data-toggle="dropdown"
+                  style="position: absolute;right: 0">
+                  ...
+                </button>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Edit", edit_group_content_path(content.group, content), class: "btn btn-light", remote:true %></li>
+                  <li>
+                    <%= link_to "Delete", [content.group, content], class: "btn btn-light", method: :delete, data: { confirm: "Are you sure you want to delete this content?"}%>
+                  </li>
+                  <li><%= link_to "Create Event", new_group_event_path(content_id: content.id, group_id: content.group.id, titile: content.title), class: "btn btn-light", remote:true %></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="content-body ">
+              <div class="col-xs-10 text-justify">
+                  <% if content.description.length > 300 %>
+                    <%= sanitize(content.description[0..300]+".....") %>
+                    <%= link_to_function 'View all', "$(this).parent().html('#{escape_javascript sanitize(content.description)}')", id: "view-all",class: "btn-xs btn-info" %>
+                  <% else %>
+                    <%= sanitize(content.description) %>
+                  <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="product-modal" class="modal fade"></div>
+<div id='remote_container'></div>
+<% end %>
+<% end %>
+<% end %>
+

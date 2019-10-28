@@ -1,0 +1,327 @@
+<!-- main -->
+    <div id="main">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-sm-9 col-lg-8 main-mid">
+                  <div class="nav-profile" style="margin-left: 12px;"> 
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#home" style="font-size:19px;">Member</a></li>
+                        <li><a data-toggle="tab" href="#menu3" style="font-size:19px;">Content</a></li>
+                    </ul>
+
+                </div>
+                <div class="tab-content" style="padding-left: 12px;">
+                  <div id="home" class="tab-pane fade in active">
+                    <% if @members.blank? %>
+                    <h2 align="center">No Member just yet!</h2>
+                    <% else %>
+                    <% @members.each do |content| %>
+                      <div class="row" style="border: 1px solid hsl(203, 24%, 89%);padding: 10px;">
+                        <div class="">
+                          <div class="row" >
+                            <div class="col-xs-4">
+                              <div>
+                                <%= image_tag( content.user.pictures, alt: "Rails", class: "background-image-pending",style: "height: 159px;margin-top: 10px;")%>
+                              </div>
+                              <div class="content-group">
+                              
+
+                                  <div class="content-status">  
+                                    <h3 align="center">Pending</h3>
+                                  </div>
+                              
+                              </div>
+                            </div>
+                            <div class="col-xs-8" >
+                              <div class="row">
+                                <a data-target="#myModal-<%= content.id %>" data-toggle="modal">
+                                  <div class="col-xs-12">
+                                      <p style= "color: #ffc107!important;font-size: 16px"><%= content.user.fullname %></p>
+                                      <p style= "font-size: 12px"><%= content.user.email %></p>
+                                      <p style= "font-size: 12px"><%= content.created_at %></p>
+                                        
+                                  </div>
+                                </a>
+                                <!-- Modal -->
+                                <div aria-labelledby="myModalLabel" class="modal fade" id="myModal-<%= content.id %>" role="dialog" tabindex="-1">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                          <span aria-hidden="true">
+                                            ×
+                                          </span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                          Member Detail
+                                        </h4>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="top-detail">
+                                          <div class="top-detail-left">
+                                            <img alt="" id="ava-member" src="<%= content.user.pictures %>">
+                                          </div>
+                                          <div class="top-detail-right">
+                                            <p style="font-weight:bold">
+                                              <%= content.user.fullname %>
+                                            </p>
+                                            <p>
+                                              Joined date: <%= content.created_at.strftime('%a %d %b %Y') %>
+                                            </p>
+                                            <p>
+                                              Gmail: <%= content.user.email %>
+                                            </p>
+                                            <p>
+                                              Skype: 11122425
+                                            </p>
+                                          
+                                          </div>
+                                        </div>
+                                        <div class="bottom-detail">
+                                            <div class="nav-profile" style="margin-left: 12px;">
+
+                                            <ul class="nav nav-tabs">
+                                              <li class="active"><a data-toggle="tab" href="#home<%= content.id %>">About</a></li>
+                                              <li><a data-toggle="tab" href="#menu3<%= content.id %>">History</a></li>
+                                            </ul>
+
+                                          </div>
+                                          <div class="tab-content" style="padding-left: 12px;">
+                                            <div id="home<%= content.id %>" class="tab-pane fade in active">
+                                              <h3>About</h3>
+                                              <p> Béo dang yeu!!! toi la <%= content.user.fullname %></p>
+                                            </div>
+
+                                            <div id="menu3<%= content.id %>" class="tab-pane fade">
+                                              <table class="table table-hover">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Date</th>
+                                                    <th>Join Group</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td><%= content.created_at %></td>
+                                                    <td><%= content.group.name %></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>2019-10-14 02:52:54 UTC</td>
+                                                    <td>Ruby 03</td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button class="btn btn-danger" data-dismiss="modal" type="button">
+                                          Close
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- end Modal -->
+                                <div  class="col-xs-12" style="margin-top:20px">
+                                  <%= link_to  "Decline", decline_member_path(group_id: content.group.id, id: content.id), class: "btn btn-danger" %>
+                                  <%= link_to  "Approve", approve_member_path(group_id: content.group.id, id: content.id),  class: "btn btn-info" %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <hr>
+                    <% end %>
+                    <% end %>
+                  </div>
+                  
+                  <div id="menu3" class="tab-pane fade">
+                    <% if @contents.blank? %>
+                    <h2 align="center">No Content just yet!</h2>
+                    <% else %>
+
+                    <% @contents.each do |content| %>
+                    <div class="row">
+                      <div class="content-pending-main">
+                        <div class="row">
+                          <div class="col-xs-4">
+                            <div>
+                              <%= image_tag( "ava.jpg", alt: "Rails", class: "background-image-content" )%>
+                            </div>
+                            <div class="content-group">
+                              <div class="content-email">
+
+                                <div class="content-status">
+                          
+                                  <h3 align="center">Pending</h3>
+                                
+                                </div>
+
+                                <span>
+                                  <img src="<%= content.user.pictures%>" alt="" id="avatar">
+                                  <%= content.user.fullname %> <br>
+                                  <div class="content-create-sz">
+                                    <%= content.created_at %>
+                                  </div>
+                                </span>
+                              </div>
+                        
+                                <div class="content-create-sz">
+                                  <span> Start:
+                                    <%=  content.startDate %></span>
+                                  </br>
+                                  <span>End:
+                                    <%=  content.endDate %></span>
+                                  </br>
+                                  <span>Level:
+                                    <%=  content.level %></span>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-xs-8">
+                            <div class="row">
+                              <div class="col-xs-8">
+                                <div class="content-title">
+                                  <%= content.title %>
+                                </div>
+                              </div>
+                              <div class="col-xs-4">
+                                <div class="menu-content-drop">
+                              
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="take-content-pending">
+                                  <div class="col-xs-10 ">
+                                    <div class="content-pending text-justify">
+                                      <% if content.description.length > 300 %>
+                                      <%= sanitize(content.description[0..300]) %>
+                                      <%= link_to_function '...View all', "$(this).parent().html('#{escape_javascript sanitize(content.description)}')", id: "pen", class:"btn-xs btn-info" %>
+                                    <% else %>
+                                      <%= sanitize(content.description.html_safe) %>
+                                    <% end %>
+                                    </div>
+                                    
+                                    <div class = "but">
+                                      <%= link_to  "Decline", decline_content_path(group_id: content.group.id, id: content.id), class: "btn btn-danger" %>
+                                    <%= link_to  "Approve", approve_content_path(group_id: content.group.id, id: content.id), class: "btn btn-info" %>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% end %>
+                   
+                    <% end %>
+                  </div>
+                  <div id="product-modal" class="modal fade"></div>
+                  
+                  </div>
+                </div>
+                <div class="col-sm-3 col-lg-4 main-right">
+                    <div class="box-main">
+                        <h3 class="card-header" id="monthAndYear"></h3>
+                        <table class="table table-bordered table-responsive-sm" id="calendar">
+                            <thead>
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="calendar-body">
+
+                            </tbody>
+                        </table>
+
+                        <div class="form-inline">
+
+                            <button class="btn btn-outline-primary col-sm-6" id="previous"
+                                onclick="previous()">Previous</button>
+
+                            <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Next</button>
+                        </div>
+                        <br />
+                        <form class="form-inline">
+                            <label class="lead mr-2 ml-2" for="month"> Jump To: </label>
+                            <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
+                                <option value=0>Jan</option>
+                                <option value=1>Feb</option>
+                                <option value=2>Mar</option>
+                                <option value=3>Apr</option>
+                                <option value=4>May</option>
+                                <option value=5>Jun</option>
+                                <option value=6>Jul</option>
+                                <option value=7>Aug</option>
+                                <option value=8>Sep</option>
+                                <option value=9>Oct</option>
+                                <option value=10>Nov</option>
+                                <option value=11>Dec</option>
+                            </select>
+
+
+                            <label for="year"></label><select class="form-control col-sm-4" name="year" id="year"
+                                onchange="jump()">
+                                <option value=1990>1990</option>
+                                <option value=1991>1991</option>
+                                <option value=1992>1992</option>
+                                <option value=1993>1993</option>
+                                <option value=1994>1994</option>
+                                <option value=1995>1995</option>
+                                <option value=1996>1996</option>
+                                <option value=1997>1997</option>
+                                <option value=1998>1998</option>
+                                <option value=1999>1999</option>
+                                <option value=2000>2000</option>
+                                <option value=2001>2001</option>
+                                <option value=2002>2002</option>
+                                <option value=2003>2003</option>
+                                <option value=2004>2004</option>
+                                <option value=2005>2005</option>
+                                <option value=2006>2006</option>
+                                <option value=2007>2007</option>
+                                <option value=2008>2008</option>
+                                <option value=2009>2009</option>
+                                <option value=2010>2010</option>
+                                <option value=2011>2011</option>
+                                <option value=2012>2012</option>
+                                <option value=2013>2013</option>
+                                <option value=2014>2014</option>
+                                <option value=2015>2015</option>
+                                <option value=2016>2016</option>
+                                <option value=2017>2017</option>
+                                <option value=2018>2018</option>
+                                <option value=2019>2019</option>
+                                <option value=2020>2020</option>
+                                <option value=2021>2021</option>
+                                <option value=2022>2022</option>
+                                <option value=2023>2023</option>
+                                <option value=2024>2024</option>
+                                <option value=2025>2025</option>
+                                <option value=2026>2026</option>
+                                <option value=2027>2027</option>
+                                <option value=2028>2028</option>
+                                <option value=2029>2029</option>
+                                <option value=2030>2030</option>
+                            </select></form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end main -->

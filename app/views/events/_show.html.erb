@@ -1,0 +1,47 @@
+<div >
+              <div class="row">
+                <div class="event-detail">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p><b>Title:</b> <%= @event.title %> </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 text-justify ">
+                      <h4><b> Something about your event: </b></h4>
+                    <div class="pr-2">
+                      <%= @event.something %>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p><b>Document Link:</b> <%= @event.document %></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p><b>Speaker:</b> <%= @event.speaker %></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p><b>Start Date:</b> <%= @event.startDate.strftime("%H:%M %d/%m/%Y") %></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p><b>End Date:</b> <%= @event.endDate.strftime("%H:%M %d/%m/%Y") %></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p><b>Duration:</b> <%= @event.duration %> hours </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </div>
+  <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+  </div>

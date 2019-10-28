@@ -1,0 +1,45 @@
+<%= form_for [:group, @event], validate:true, remote:true do |f| %>
+  <%= f.hidden_field :content_id, value: params[:content_id] %>
+<div class="row">
+  <div class="control-label col-sm-12">
+    <div class="event-form-pading">
+      <%= f.text_field :title, class:"form-control", placeholder: "Title"%>
+    </div>
+    <div class="event-form-pading">
+      <%=f.text_area :something,rows: 5, class: "form-control", placeholder: "Something about your event" %>
+    </div>
+    <div class="event-form-pading">
+      <%= f.text_field :document, class:"form-control", placeholder: "Document Link "  %>
+    </div>
+    <div class="event-form-pading">
+      <%= f.text_field :speaker, class:"form-control", placeholder: "Speaker",required: true  %>
+    </div>
+    <div class="row">
+      <div class="control-label col-sm-6">
+        <div class="event-form-pading">
+         <%=f.datetime_field :startDate, class: "form-control",placeholder: "Start Date"  %>
+        </div>
+          <script>
+              $('.datetimepicker').datepicker({format: 'dd/mm/yyyy', startDate: '0d'});
+          </script>
+      </div>
+      <div class="control-label col-sm-6">
+        <div class="event-form-pading-select">
+
+        <%= f.select :duration, [[ '25 minutes', '0.42' ],[ '1 hour 25 minutes', '1.42'],[ '2 hour 25 minutes', '2.42']],{}, {class: "js-example-tags select3"}  %>
+
+          <script type="text/javascript">
+             $(".js-example-tags").select2({tags: true});
+          </script>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="event-button">
+ <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+  <%= f.submit "Add", class:"btn btn-primary" %>
+  </div>
+<% end %>

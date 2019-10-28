@@ -1,0 +1,136 @@
+<div class="header_top">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4" id="left">
+            <%= link_to image_tag("lg.png", alt:"logo"), root_path %>
+        </div>
+        <div class="col-xs-12 col-sm-2" id="mid">
+            <div class="flow">
+                <div class="dropdown following">
+                    <a class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Following Classes
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu overflow" role="menu" aria-labelledby="menu1">
+                        <% if user_signed_in? %>
+                            <% @following.each do |follow| %>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> <%= follow.name %></a></li>
+                            <% end %>
+                        <% end %>
+                        <li role="presentation" class="divider"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 " id="right">
+            <ul>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+                <% if user_signed_in? %>
+                <li id="profile" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="<%= current_user.pictures%>" alt="" id="avatar">
+                        <%= current_user.fullname %>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li> <%= link_to ' My Profile', user_path(current_user) %></li>
+                        <li class="divider"></li>
+                        <li>  <%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+                    </ul>
+                </li>
+                <% else %>
+                <li><%= link_to  "login", user_google_oauth2_omniauth_authorize_path %></li>
+                <% end %>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="header_bot">
+    <div class="cover-image">
+    <% if @group.cover.nil? || @group.cover.blank? %>
+        <%= image_tag("hero_1.jpg", alt: "Cover",id:"cover-header") %>
+    <% else %>
+         <%= image_tag @group.cover.url %>
+    <% end %>
+    </div>
+</div>
+  <!-- menu group avatar group -->
+    <div class="container">
+        <div class="row" id="menuG">
+            <div class="col-md-3">
+                <div class="avatarGroup">
+                 <% if @group.picture.nil? || @group.picture.blank?%>
+                     <%= image_tag("ava.jpeg", alt: "Cover",id:"cover-header") %>
+                <% else %>
+                    <%= image_tag @group.picture.url %>
+                <% end %>
+                </div>
+                <div class="camera">
+                    <%= form_for @group do |f| %>
+                    <%= f.label :picture, ".",class: "glyphicon glyphicon-camera", for: "avata" %>
+                    <%= f.file_field :picture, id: "avata",class: "upload" %>
+                    <% end %>
+                </div>
+                <div class="lean">
+                <h2><%= @group.name %></h2>
+                <% if user_signed_in? %>
+                    <% if user_joined_in_group? %>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Joined
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to  "Leave Group", leave_group_path(user_id: current_user.id, group_id: @group.id) %></li>
+                        </ul>
+                    </div>
+                    <% elsif  user_pending_in_group? %>
+                        <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Pending
+                        </div>
+                    <% else %>
+                       <button><%= link_to  "+ Want To Join", join_group_path(user_id: current_user.id, group_id: @group.id) %></button>
+                    <% end %>
+                <% end %>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="menugruop">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <%= link_to 'Contents', group_path(@group) %>
+                        </li>
+                        <li>
+                            <%= link_to  "Member",  group_members_path(@group) %>
+                        </li>
+                        <li>
+                            <%= link_to  "Attendance",  group_attendances_path(@group) %>
+                        </li>
+                        <li>
+                            <%= link_to  "Calendar", group_events_path(group_id: @group.id) %>
+                        </li>
+                        <li>
+
+                            <% if  user_is_captain? %>
+                            <%= link_to  "Pending items", group_pendings_path(@group) %>
+                             <% end %>
+                        </li>
+                        <li>
+                        <% if  user_is_captain? %>
+                            <%= link_to  "Setting", group_settings_path(@group) %>
+                         <% end %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <% if  user_is_captain? %>
+            <div class="col-md-3" style= "width: 35px;border-radius: 100%; background-color: blue;color: #fff;height: 22px;right: 213px;top: -2px;">
+                <span>
+                    <% if pending_item %>
+                        <%= @pending_item %>
+                    <% end %>
+                </span>
+            </div>
+            <% end %>
+        </div>
+    </div>
+    <!-- end menu group avatar group -->
+

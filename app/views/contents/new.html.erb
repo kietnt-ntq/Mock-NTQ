@@ -1,0 +1,67 @@
+<% if user_signed_in? %>
+    <div class="row">
+      <div class=" col-sm-12 col-sm-offset-1">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <%=link_to "Add content", new_group_content_path(@group), class: "btn btn-lg btn-default" %>
+          </li>
+          <li class="nav-item">
+            <%=link_to "Or view  exsting contents", group_path(@group), class: "btn btn-lg btn-default" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <%=form_for([@group, @content], validate: true ) do |f| %>
+      <div class="form-group">
+        <div class="control-label col-sm-1">
+        </div>
+
+        <div class="content-date">
+          <div class="row">
+            <div class="col-sm-4">
+              <%=f.text_field :title,class: "form-control", placeholder: "Title", autofocus: true, required: true  %>
+            </div>
+            <div class="col-sm-4">
+               <%= f.select :level, [[ 'Beginner', 'Beginner' ],[ 'intermediste', 'intermediste'],[ 'expert', 'expert']],{}, {class: "form-control"} %>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-label col-sm-1">
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <%=f.text_field :startDate, class: "form-control datepicker ", placeholder: "Start Date", required: true,:id => "datepicker"  %>
+          </div>
+          <div class="col-sm-4">
+            <%=f.text_field :endDate, class: "form-control datepicker", placeholder: "End Date", required: true, :id => "datepicker"  %>
+          </div>
+        </div>
+
+      <script>
+        $('.datepicker').datepicker({format: 'dd/mm/yyyy', startDate: '0d'});
+      </script>
+
+        <div class="content-star">
+          <div class="content-sz">
+              <div data-no-turbolink>
+            <%=f.cktext_area :description,rows: 10, class: "form-control", placeholder: "Body of content", required: true  %>
+              </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+        <div class="col-sm-offset-1 col-sm-10">
+          <div class="content-star">
+            <%=link_to 'Cancel  ', group_path(@group), class: "btn btn-default" %>
+              <%=f.submit "Done", class: 'btn btn-primary btn-large' %>
+          </div>
+        </div>
+      </div>
+      </div>
+      <% end %>
+        <% end %>
